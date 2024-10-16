@@ -5,6 +5,7 @@ import android.widget.Button
 import android.widget.Toast
 import android.widget.TextView
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -21,6 +22,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var falseButton: Button
     private lateinit var nextButton: Button
     private lateinit var questionTextView: TextView
+    var id_Quistion=1
     private val quizViewModel:QuizViewModel by lazy {
         ViewModelProvider(this).get(QuizViewModel::class.java)
     }
@@ -34,8 +36,7 @@ class MainActivity : AppCompatActivity() {
         val currentIndex = savedInstanceState?.getInt(KEY_INDEX, 0) ?: 0
         quizViewModel.currentIndex = currentIndex
         val provider: ViewModelProvider = ViewModelProvider(this)
-        val quizViewModel =
-            provider.get(QuizViewModel::class.java)
+        val quizViewModel = provider.get(QuizViewModel::class.java)
         Log.d(TAG, "Got a QuizViewModel:$quizViewModel")
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -53,15 +54,24 @@ class MainActivity : AppCompatActivity() {
         trueButton.setOnClickListener()
         {
             checkAnswer(true)
+            trueButton.visibility= View.INVISIBLE
+            falseButton.visibility= View.INVISIBLE
         }
         falseButton.setOnClickListener()
         {
             checkAnswer(false)
+            trueButton.visibility= View.INVISIBLE
+            falseButton.visibility= View.INVISIBLE
         }
         nextButton.setOnClickListener()
         {
             quizViewModel.moveToNext()
             updateQuestion()
+            trueButton.visibility= View.VISIBLE
+            falseButton.visibility= View.VISIBLE
+            id_Quistion++
+            if(id_Quistion==6)
+                nextButton.visibility=View.INVISIBLE
         }
         updateQuestion()
     }

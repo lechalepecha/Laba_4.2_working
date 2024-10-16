@@ -25,8 +25,8 @@
 
     <TextView
         android:id="@+id/question"
-        android:layout_width="310dp"
-        android:layout_height="35dp"
+        android:layout_width="594dp"
+        android:layout_height="47dp"
         android:text="@string/question_text"
         android:textAlignment="center"
         android:textColor="#FFFFFFFF"
@@ -45,7 +45,7 @@
         android:layout_marginTop="32dp"
         android:text="@string/button_true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.36"
+        app:layout_constraintHorizontal_bias="0.378"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/question" />
 
