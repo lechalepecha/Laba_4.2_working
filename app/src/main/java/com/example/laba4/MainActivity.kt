@@ -27,13 +27,10 @@ class MainActivity : AppCompatActivity() {
          falseButton=findViewById(R.id.button_false)
         trueButton.setOnClickListener()
         {
-            View->
-            //Что-то выполнить после нажатия
             Toast.makeText(this,R.string.correct_toast,Toast.LENGTH_SHORT).show()
         }
         falseButton.setOnClickListener()
         {
-            View->
             Toast.makeText(this,R.string.incorrect_toast,Toast.LENGTH_SHORT).show()
         }
     }
