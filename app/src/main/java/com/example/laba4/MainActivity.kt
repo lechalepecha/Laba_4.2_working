@@ -5,6 +5,7 @@ import android.widget.Button
 import android.widget.Toast
 import android.widget.TextView
 import android.util.Log
+import androidx.lifecycle.ViewModelProvider
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -12,25 +13,31 @@ import androidx.core.view.WindowInsetsCompat
 
 
 private const val TAG="MainActivity"
+private const val KEY_INDEX = "index"
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var trueButton: Button
     private lateinit var falseButton: Button
     private lateinit var nextButton: Button
     private lateinit var questionTextView: TextView
-    private  val questionBank= listOf(Question(R.string.question_australia,true),
-        Question(R.string.question_oceans,true),
-        Question(R.string.question_mideast,false),
-        Question(R.string.question_africa,false),
-        Question(R.string.question_americas,true),
-        Question(R.string.question_asia,true))
-    private var currentIndex=0
+    private val quizViewModel:QuizViewModel by lazy {
+        ViewModelProvider(this).get(QuizViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d(TAG, "onCreate(Bundle?) called")
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+
+        val currentIndex = savedInstanceState?.getInt(KEY_INDEX, 0) ?: 0
+        quizViewModel.currentIndex = currentIndex
+        val provider: ViewModelProvider = ViewModelProvider(this)
+        val quizViewModel =
+            provider.get(QuizViewModel::class.java)
+        Log.d(TAG, "Got a QuizViewModel:$quizViewModel")
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -53,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         }
         nextButton.setOnClickListener()
         {
-            currentIndex=(currentIndex+1)%questionBank.size
+            quizViewModel.moveToNext()
             updateQuestion()
         }
         updateQuestion()
@@ -74,6 +81,12 @@ class MainActivity : AppCompatActivity() {
         super.onPause()
         Log.d(TAG,"onPause() called")
     }
+    override fun onSaveInstanceState(savedInstanceState: Bundle)
+    {
+        super.onSaveInstanceState(savedInstanceState)
+        Log.i(TAG,"onSaveInstanceState")
+        savedInstanceState.putInt(KEY_INDEX,quizViewModel.currentIndex)
+    }
     override fun onStop()
     {
         super.onStop()
@@ -86,13 +99,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateQuestion(){
-        val questionTextResId=questionBank[currentIndex].textResId
+        val questionTextResId=quizViewModel.currentQuestionText
         questionTextView.setText(questionTextResId)
     }
 
     private fun checkAnswer(userAnswer:Boolean)
     {
-        val correctAnswer=questionBank[currentIndex].answer
+        val correctAnswer=quizViewModel.currentQuestionAnswer
         val messageResId= if (userAnswer==correctAnswer)
         {
             R.string.correct_toast
