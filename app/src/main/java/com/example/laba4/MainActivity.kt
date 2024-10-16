@@ -2,6 +2,7 @@ package com.example.laba4
 
 import android.os.Bundle
 import android.widget.Button
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -26,12 +27,14 @@ class MainActivity : AppCompatActivity() {
          falseButton=findViewById(R.id.button_false)
         trueButton.setOnClickListener()
         {
-                View->
+            View->
             //Что-то выполнить после нажатия
+            Toast.makeText(this,R.string.correct_toast,Toast.LENGTH_SHORT).show()
         }
         falseButton.setOnClickListener()
         {
-                View->
+            View->
+            Toast.makeText(this,R.string.incorrect_toast,Toast.LENGTH_SHORT).show()
         }
     }
 }
