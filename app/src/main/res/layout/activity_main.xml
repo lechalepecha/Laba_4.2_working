@@ -45,7 +45,7 @@
         android:layout_marginTop="32dp"
         android:text="@string/button_true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.187"
+        app:layout_constraintHorizontal_bias="0.19"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/question" />
 
@@ -56,7 +56,7 @@
         android:layout_marginTop="32dp"
         android:text="@string/button_false"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.125"
+        app:layout_constraintHorizontal_bias="0.19"
         app:layout_constraintStart_toEndOf="@+id/button_true"
         app:layout_constraintTop_toBottomOf="@+id/question" />
 
