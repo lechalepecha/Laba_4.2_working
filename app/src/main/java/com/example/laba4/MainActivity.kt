@@ -6,6 +6,7 @@ import android.widget.Toast
 import android.widget.TextView
 import android.util.Log
 import android.view.View
+import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -22,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var falseButton: Button
     private lateinit var nextButton: Button
     private lateinit var questionTextView: TextView
+    private lateinit var cheatButton: Button
     var id_Quistion=1
     var score=0
     private val quizViewModel:QuizViewModel by lazy {
@@ -50,6 +52,7 @@ class MainActivity : AppCompatActivity() {
         falseButton=findViewById(R.id.button_false)
         nextButton=findViewById(R.id.button_next)
         questionTextView=findViewById(R.id.question)
+        cheatButton=findViewById(R.id.button_cheat)
 
 
         trueButton.setOnClickListener()
@@ -74,6 +77,12 @@ class MainActivity : AppCompatActivity() {
             if(id_Quistion==6)
                 nextButton.visibility=View.INVISIBLE
         }
+        cheatButton.setOnClickListener()
+        {
+            val intent=Intent(this,CheatActivity::class.java)
+            startActivity(intent)
+        }
+
         updateQuestion()
     }
 
