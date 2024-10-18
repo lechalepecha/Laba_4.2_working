@@ -1,5 +1,6 @@
 package com.example.laba4
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
@@ -8,6 +9,8 @@ import android.util.Log
 import android.view.View
 import android.content.Intent
 import android.app.Activity
+import android.app.ActivityOptions
+import android.os.Build
 import androidx.lifecycle.ViewModelProvider
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -33,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         ViewModelProvider(this).get(QuizViewModel::class.java)
     }
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d(TAG, "onCreate(Bundle?) called")
@@ -75,7 +79,14 @@ class MainActivity : AppCompatActivity() {
         {
             val answerIsTrue=quizViewModel.currentQuestionAnswer
             val intent=CheatActivity.newIntent(this@MainActivity,answerIsTrue)
-            startActivityForResult(intent,REQUEST_CODE_CHEAT)
+            if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M)
+            {
+                val options = ActivityOptions.makeClipRevealAnimation(cheatButton, 0, 0, cheatButton.width, cheatButton.height)
+                startActivityForResult(intent,REQUEST_CODE_CHEAT,options.toBundle())
+            }else
+            {
+                startActivityForResult(intent,REQUEST_CODE_CHEAT)
+            }
         }
 
         updateQuestion()
