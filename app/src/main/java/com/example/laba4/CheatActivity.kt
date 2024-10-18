@@ -29,9 +29,9 @@ class CheatActivity : AppCompatActivity() {
         setContentView(R.layout.activity_cheats)
 
         answerIsTrue=intent.getBooleanExtra(EXTRA_ANSWER_IS_TRUE,false)
-        answerTextView=findViewById(R.id.answer)
+        answerTextView=findViewById(R.id.VersionSDK)
         showAnswerButton=findViewById(R.id.button_show)
-        //versionSDK=findViewById(R.id.VersionSDK)
+        versionSDK=findViewById(R.id.VersionSDK)
         showAnswerButton.setOnClickListener()
         {
             val answerText=when{
@@ -41,7 +41,7 @@ class CheatActivity : AppCompatActivity() {
             answerTextView.setText(answerText)
             setAnswerShownResult(true)
         }
-        //versionSDK.setText("API Level "+Build.VERSION.SDK_INT.toString())
+        versionSDK.setText("API Level "+ Build.VERSION.SDK_INT.toString())
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
